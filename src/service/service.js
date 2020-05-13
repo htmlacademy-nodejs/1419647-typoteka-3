@@ -19,8 +19,8 @@ const customCommands = [{
   description: `Outputs the version`
 }];
 
-const [ commandName, ...commandParams ] = process.argv.slice(2);
-
+const [userCommandName, ...commandParams] = process.argv.slice(2);
 const getCommand = (commandName) => customCommands.find((command) => command.name === commandName);
-const userCommand = getCommand(commandName);
-return userCommand ? userCommand.action(commandParams) : errors.commandUnknown(commandName);
+
+const userCommand = getCommand(userCommandName);
+return userCommand ? userCommand.action(commandParams) : errors.commandUnknown(userCommandName);
