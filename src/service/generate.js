@@ -24,10 +24,10 @@ const readContent = async (filePath) => {
 
 const generateOffers = (count, titles, categories, sentences) => {
   return Array(parseInt(count, 10)).fill({}).map(() => ({
-    category: [categories[utils.getRandomArbitrary(1, categories.length - 1)]],
-    title: titles[utils.getRandomArbitrary(1, titles.length - 1)],
-    announce: utils.shuffle(sentences).slice(1, 5).join(` `),
-    fullText: utils.shuffle(sentences).slice(1, 5).join(` `),
+    category: [categories[utils.getRandomArbitrary(0, categories.length - 1)]],
+    title: titles[utils.getRandomArbitrary(0, titles.length - 1)],
+    announce: utils.shuffle(sentences).slice(0, 5).join(` `),
+    fullText: utils.shuffle(sentences).slice(0, 5).join(` `),
     createdDate: DateTime.local().minus({days: utils.getRandomArbitrary(0, 90)}).toFormat(`yyyy-MM-dd hh:mm:ss`),
   }));
 };
