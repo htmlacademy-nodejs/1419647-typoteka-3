@@ -1,7 +1,7 @@
 'use strict';
 
+const fs = require(`fs`).promises;
 const {DateTime} = require(`luxon`);
-const fs = require(`fs`);
 const utils = require(`../utils`);
 const errors = require(`../errorMessages`);
 const constants = require(`../constants`);
@@ -22,7 +22,7 @@ const generateArray = (limit, arr) => {
   return randomIndexes.map((i) => arr[i]);
 };
 
-const generateMocks = (count = 1) => {
+const generateMocks = async (count = 1) => {
   if (count > constants.MAX_LIMIT) {
     return errors.generateMocksLimitExceeded();
   }
@@ -46,11 +46,11 @@ const generateMocks = (count = 1) => {
   }
 
   try {
-    fs.writeFileSync(`mock.json`, JSON.stringify(offers, null, 4));
+    await fs.writeFile(`mock.json`, JSON.stringify(offers, null, 4));
   } catch (err) {
     return process.exit(1);
   }
-  return process.exit(0);
+  return true;
 };
 
 module.exports = {
