@@ -23,4 +23,4 @@ const [userCommandName, ...commandParams] = process.argv.slice(2);
 const getCommand = (commandName) => customCommands.find((command) => command.name === commandName);
 
 const userCommand = getCommand(userCommandName);
-return userCommand ? userCommand.action(commandParams) : errors.commandUnknown(userCommandName);
+return userCommand ? userCommand.action(...commandParams) : errors.commandUnknown(userCommandName);
