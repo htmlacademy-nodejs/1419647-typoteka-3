@@ -21,7 +21,13 @@ const buildResponse = async () => {
   if (!mocks) {
     return null;
   }
-  return JSON.parse(mocks).map((item) => `<ul><li>${item.title}</li></ul>`).join(``);
+  try {
+    const parsedMocks = JSON.parse(mocks);
+    return parsedMocks.map((item) => `<ul><li>${item.title}</li></ul>`).join(``);
+  } catch (err) {
+    return null;
+  }
+
 };
 
 const onClientConnect = async (req, res) => {
@@ -32,21 +38,19 @@ const onClientConnect = async (req, res) => {
         res.writeHead(NOT_FOUND_CODE, {
           'Content-Type': `text/plain; charset=UTF-8`,
         });
-        res.end(`Not found`);
-        break;
+        return res.end(`Not found`);
       }
       res.writeHead(HTTP_SUCCESS_CODE, {
         'Content-Type': `text/html; charset=UTF-8`,
       });
-      res.end(titles);
-      break;
+      return res.end(titles);
     }
 
     default: {
       res.writeHead(NOT_FOUND_CODE, {
         'Content-Type': `text/plain; charset=UTF-8`,
       });
-      res.end(`Oops, not found. It's all Peter's fault`);
+      return res.end(`Oops, not found. It's all Peter's fault`);
     }
   }
 };
